@@ -1,27 +1,27 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
-import './threadList.css'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import './threadList.css';
 
 const ThreadList = () => {
-  const [threads, setThreads] = useState([])
+  const [threads, setThreads] = useState([]);
 
   useEffect(() => {
     axios.get('https://railway.bulletinboard.techtrain.dev/threads?offset=1')
       .then(response => {
-        setThreads(response.data)
+        setThreads(response.data);
       })
       .catch(error => {
-        console.error('Error fetching data:', error)
-      })
-  }, [])
+        console.error('Error fetching data:', error);
+      });
+  }, []);
 
   useEffect(() => {
     // 最後のスレッドにクラスを追加
-    const threadItems = document.querySelectorAll('.thread-item')
+    const threadItems = document.querySelectorAll('.thread-item');
     if (threadItems.length > 0) {
-      threadItems[threadItems.length - 1].classList.add('last-thread-item')
+      threadItems[threadItems.length - 1].classList.add('last-thread-item');
     }
-  }, [threads])
+  }, [threads]);
 
   return (
     <div className="thread-container">
@@ -38,7 +38,7 @@ const ThreadList = () => {
         <p>Loading...</p>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default ThreadList
+export default ThreadList;
