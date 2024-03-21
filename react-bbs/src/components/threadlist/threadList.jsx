@@ -1,35 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
+import useThreads from '../../hooks/useThreads';
 import './threadList.css';
 
 const ThreadList = () => {
-  const [threads, setThreads] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const { threads, hasMore } = useThreads(currentPage);
 
-  useEffect(() => {
-    axios.get('https://railway.bulletinboard.techtrain.dev/threads?offset=1')
-      .then(response => {
-        setThreads(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
-  }, []);
+  // ページネーションが変更された際にページ番号のスレッド一覧を表示する
+  const handleChange = (event, value) => {
+    setCurrentPage(value);
+  };
 
-  useEffect(() => {
-    // 最後のスレッドにクラスを追加
-    const threadItems = document.querySelectorAll('.thread-item');
-    if (threadItems.length > 0) {
-      threadItems[threadItems.length - 1].classList.add('last-thread-item');
-    }
-  }, [threads]);
+  // hasMoreの値によって次のページ番号を表示するか判定
+  const totalPages = hasMore ? currentPage + 1 : currentPage;
 
   return (
     <div className="thread-container">
       <h1>新着スレッド</h1>
-      {/* スレッド数が1つ以上存在する時に表示する */}
+      {/* スレッドが1件以上存在する場合、スレッドを表示する。0件の場合はLoading...と表示される */}
       {threads.length > 0 ? (
-        threads.map(thread => (
-          <div key={thread.id} className="thread-item">
+        threads.map((thread, index) => (
+          <div key={thread.id} className={`thread-item${index === threads.length - 1 ? ' thread-last-item' : ''}`}>
             <h2>{thread.title}</h2>
             <p>{thread.content}</p>
           </div>
@@ -37,6 +30,11 @@ const ThreadList = () => {
       ) : (
         <p>Loading...</p>
       )}
+      <div className="pagination-container">
+        <Stack spacing={2} justifyContent="center">
+          <Pagination count={totalPages} page={currentPage} onChange={handleChange} />
+        </Stack>
+      </div>
     </div>
   );
 };
