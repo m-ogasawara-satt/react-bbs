@@ -9,7 +9,7 @@ const ThreadList = () => {
   const { threads, hasMore } = useThreads(currentPage);
 
   // ページネーションが変更された際にページ番号のスレッド一覧を表示する
-  const handleChange = (event, value) => {
+  const handleChange = (value) => {
     setCurrentPage(value);
   };
 
@@ -18,13 +18,16 @@ const ThreadList = () => {
 
   return (
     <div className="thread-container">
-      <h1>新着スレッド</h1>
-      {/* スレッドが1件以上存在する場合、スレッドを表示する。0件の場合はLoading...と表示される */}
+      <h1 className="thread-title">新着スレッド</h1>
+      {/* <div className=階層下げtる */}
+      {/* スレッドが1件以上存在する場合、スレッドを表示する。0件の場合はLoading...と表示する */}
       {threads.length > 0 ? (
         threads.map((thread, index) => (
-          <div key={thread.id} className={`thread-item${index === threads.length - 1 ? ' thread-last-item' : ''}`}>
-            <h2>{thread.title}</h2>
-            <p>{thread.content}</p>
+          <div className="thread-frame">
+            <div key={thread.id} className="thread-item">
+              <h2>{thread.title}</h2>
+              <p>{thread.content}</p>
+            </div>
           </div>
         ))
       ) : (

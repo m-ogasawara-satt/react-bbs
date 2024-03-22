@@ -4,18 +4,25 @@
   align-items: center;
   gap: 20px;
 }
-  
+
+.thread-frame {
+  width: 50%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
 .thread-item {
   background-color: #f0f0f0;
   border-radius: 10px;
   padding: 10px 0 10px 30px;
   width: 50%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
   text-align: left;
 }
 
-.thread-last-item {
-  margin-bottom: 100px; /* 余白を追加 */
+.thread-item:last-child {
+  margin-bottom: 100px;
 }
 
 .pagination-container {

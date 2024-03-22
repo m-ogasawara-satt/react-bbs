@@ -1,10 +1,12 @@
 .App-header {
   background-color: #88c783;
+  /* 固定値にしてあげた方がいい */
   height: 10%;
   padding: 20px 80px;
   color: white;
 }
 
-.h1 {
+/* h1というクラス名を付与してcss適用した方が使いやすい */
+h1 {
   font-weight: normal;
 }
